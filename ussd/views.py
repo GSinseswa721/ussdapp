@@ -27,24 +27,24 @@ def ussdApp(request):
         response =""
         #  main menu for our application
         if text == '':
-            response =  "CON Murakaza neza kuri Idafarm \n"
-            response += "1. Kwandikisha igihingwa \n"
-            response += "2. Kumenya ingengabihe \n"
+            response =  "CON Welcome in Kigali insight hospitals \n"
+            response += "1. Registration \n"
+            response += "2. Hospitals \n"
         elif text == '1':
 
-            response = "CON Hitamo igihingwa \n"
-            response += "1. Ibinyomoro \n"
-            response += "2. Indimu"
+            response = "CON Choose hospital \n"
+            response += "1. CHUK \n"
+            response += "2. King Faisal Hospital"
         elif text == '1*1':
-            product="Ibinyomoro"
-            response = "CON shyiramo ubuso bw'ubutaka bwawe bw' "+str(product)+"\n"
+            product="CHUK"
+            response = "CON Specialized "+str(product)+"\n"
         elif category =='1*1' and int(len(level)) == 3 and str(level[2]) in  str(level):
-            response = "CON Uwo mubufatanyije \n"
+            response = "CON Symbols \n"
         elif category =='1*1' and int(len(level)) == 4 and str(level[3]) in  str(level):
-            response = "CON Shyiramo nimero y'irangamuntu yuwo mufatanyije \n"
+            response = "CON Date of the day \n"
         elif category =='1*1' and int(len(level)) == 5 and str(level[4]) in  str(level):
             # save the data into the database
-            category='Ibinyomoro'
+            category='CHUK'
             sizeOfland=level[2]
             names= level[3]
             idnumber = level[4]
@@ -58,18 +58,18 @@ def ussdApp(request):
             idnumber=idnumber,
             )
             insert.save()
-            response = "END Murakoze kwiyandikisha kuri Ida farm \n"
+            response = "END Thank you \n"
 
 
         elif text == '1*2':
-            product ="Indimu"
-            response ="CON shyiramo ubuso bw'ubutaka bwawe bw' "+str(product)+"\n"
+            product ="King faisal hospital"
+            response ="CON Specialized "+str(product)+"\n"
         elif category =='1*2' and int(len(level)) == 3 and str(level[2]) in  str(level):
-            response = "CON Uwo mubufatanyije \n"
+            response = "CON Symbols \n"
         elif category =='1*2' and int(len(level)) == 4 and str(level[3]) in  str(level):
-            response = "CON Shyiramo nimero y'irangamuntu yuwo mufatanyije \n"
+            response = "CON your names \n"
         elif category =='1*2' and int(len(level)) == 5 and str(level[4]) in  str(level):
-            category='Indimu'
+            category='CHUK'
             sizeOfland=level[2]
             names= level[3]
             idnumber = level[4]
@@ -83,39 +83,39 @@ def ussdApp(request):
             idnumber=idnumber,
             )
             insert.save()
-            response = "END Murakoze kwiyandikisha kuri Ida farm \n"
+            response = "END Thank you \n"
          
         #  ======================== INGENGABIHE==================
         elif text == '2':
-            response = "CON Hitamo igihe \n "
-            response += "1. Rimwe mukwezi \n"
-            response += "2. Kabiri Mukwezi \n"
-            response += "3. Buri gihe"
+            response = "CON  Dates\n "
+            response += "1. Once in month \n"
+            response += "2. Twice in month \n"
+            response += "3. Daily"
         elif text == '2*1':
             # save the data
             insertData(
-                category='Rimwe',
+                category='One',
                 sessionID=session_id,
                 phoneNumber=phone_number
             )
-            response ="END Murakoze , tuzajya tubagezaho amakuru ku iteganyagihe rimwe mukwezi"
+            response ="END Thanks , we will be sending information once in month"
         elif text == '2*2':
             insertData(
-                category='Kabiri',
+                category='Two',
                 sessionID=session_id,
                 phoneNumber=phone_number
             )
-            response ="END Murakoze , tuzajya tubagezaho amakuru ku iteganyagihe kabiri mukwezi"
+            response ="END Thanks , we will be sending information twice in month"
         elif text == '2*3':
             insertData(
-                category='Burigihe',
+                category='Daily',
                 sessionID=session_id,
                 phoneNumber=phone_number
             )
-            response ="END Murakoze , tuzajya tubagezaho amakuru ku iteganyagihe Buri munsi"
+            response ="END Thanks , we will be sending information daily"
 
         else:
-            response = "END Ukanze ibitaribyo, ongera mukanya"
+            response = "END try again"
         return HttpResponse(response)
     else:
         return HttpResponse('we are on ussd app')
